@@ -1,0 +1,16 @@
+.idea/
+.DS_store
+*.pyc
+experiments/
+visualization/
+.ipynb_checkpoints
+
+*.ply
+*.png
+*.jpg
+*.jpeg
+*.pth
+*.zip
+*.fbx
+*.bin
+*.gltf

@@ -1,0 +1,34 @@
+{
+  "train": [
+    "Date01_Sub01_basketball",
+    "Date01_Sub01_keyboard_move",
+    "Date01_Sub01_keyboard_typing",
+    "Date02_Sub02_basketball",
+    "Date02_Sub02_keyboard_move",
+    "Date02_Sub02_keyboard_typing",
+    "Date04_Sub05_basketball",
+    "Date04_Sub05_keyboard",
+    "Date05_Sub06_basketball",
+    "Date05_Sub06_keyboard_hand",
+    "Date05_Sub06_keyboard_move",
+    "Date06_Sub07_basketball",
+    "Date06_Sub07_keyboard_move",
+    "Date06_Sub07_keyboard_typing",
+    "Date07_Sub04_basketball",
+    "Date07_Sub04_keyboard_move",
+    "Date07_Sub04_keyboard_typing",
+    "Date07_Sub08_basketball",
+    "Date07_Sub08_keyboard_move",
+    "Date07_Sub08_keyboard_typing"
+  ],
+  "test": [
+    "Date03_Sub03_basketball",
+    "Date03_Sub03_keyboard_move",
+    "Date03_Sub03_keyboard_typing",
+    "Date03_Sub04_basketball",
+    "Date03_Sub04_keyboard_move",
+    "Date03_Sub04_keyboard_typing",
+    "Date03_Sub05_basketball",
+    "Date03_Sub05_keyboard"
+  ]
+}

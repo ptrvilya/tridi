@@ -1,0 +1,31 @@
+name: tridi
+channels:
+  - defaults
+  - conda-forge
+  - pytorch
+dependencies:
+- python=3.10
+- pip
+- numpy
+- scipy
+- scikit-learn
+- rtree
+- faiss-cpu=1.12.0
+- pip:
+  - --index-url https://download.pytorch.org/whl/cu130
+  - --extra-index-url https://pypi.python.org/simple
+  - diffusers
+  - transformers
+  - smplx
+  - tomlkit
+  - wandb
+  - omegaconf
+  - loguru
+  - trimesh
+  - clip
+  - h5py
+  - libigl
+  - joblib
+  - tqdm
+  - torch==2.9.0
+  - torchvision==0.24.0

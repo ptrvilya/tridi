@@ -1,0 +1,216 @@
+behave:
+  objects:
+  - backpack
+  - boxlong
+  - boxtiny
+  - keyboard
+  - stool
+  - tablesquare
+  - yogaball
+  - basketball
+  - boxmedium
+  - chairblack
+  - monitor
+  - suitcase
+  - toolbox
+  - yogamat
+  - boxlarge
+  - boxsmall
+  - chairwood
+  - plasticcontainer
+  - tablesmall
+  - trashbin
+  obj2groupid:
+    backpack: 0
+    boxlong: 1
+    boxtiny: 2
+    keyboard: 3
+    stool: 4
+    tablesquare: 5
+    yogaball: 6
+    basketball: 7
+    boxmedium: 8
+    chairblack: 9
+    monitor: 10
+    suitcase: 11
+    toolbox: 12
+    yogamat: 13
+    boxlarge: 14
+    boxsmall: 15
+    chairwood: 16
+    plasticcontainer: 17
+    tablesmall: 18
+    trashbin: 19
+  obj2classid:
+    backpack: 0
+    boxlong: 1
+    boxtiny: 2
+    keyboard: 3
+    stool: 4
+    tablesquare: 5
+    yogaball: 6
+    basketball: 7
+    boxmedium: 8
+    chairblack: 9
+    monitor: 10
+    suitcase: 11
+    toolbox: 12
+    yogamat: 13
+    boxlarge: 14
+    boxsmall: 15
+    chairwood: 16
+    plasticcontainer: 17
+    tablesmall: 18
+    trashbin: 19
+  downsample_factor: 1
+  fps_train: 10
+  fps_eval: 1
+  augment_rotation: true
+  augment_symmetry: true
+grab:
+  objects:
+  - banana
+  - binoculars
+  - camera
+  - coffeemug
+  - cup
+  - doorknob
+  - eyeglasses
+  - flute
+  - flashlight
+  - fryingpan
+  - gamecontroller
+  - hammer
+  - headphones
+  - knife
+  - lightbulb
+  - mouse
+  - mug
+  - phone
+  - teapot
+  - toothbrush
+  - wineglass
+  obj2groupid:
+    banana: 20
+    binoculars: 21
+    camera: 22
+    coffeemug: 23
+    cup: 24
+    doorknob: 25
+    eyeglasses: 26
+    flute: 27
+    flashlight: 28
+    fryingpan: 29
+    gamecontroller: 30
+    hammer: 31
+    headphones: 32
+    knife: 33
+    lightbulb: 34
+    mouse: 35
+    mug: 23
+    phone: 36
+    teapot: 37
+    toothbrush: 38
+    wineglass: 39
+  obj2classid:
+    banana: 20
+    binoculars: 21
+    camera: 22
+    coffeemug: 23
+    cup: 24
+    doorknob: 25
+    eyeglasses: 26
+    flute: 27
+    flashlight: 28
+    fryingpan: 29
+    gamecontroller: 30
+    hammer: 31
+    headphones: 32
+    knife: 33
+    lightbulb: 34
+    mouse: 35
+    mug: 23
+    phone: 36
+    teapot: 37
+    toothbrush: 38
+    wineglass: 39
+  train_subjects:
+  - s1
+  - s2
+  - s3
+  - s4
+  - s5
+  - s6
+  - s7
+  - s8
+  test_subjects:
+  - s9
+  - s10
+  downsample_factor: 1
+  fps_train: 10
+  fps_eval: 1
+  augment_rotation: true
+  augment_symmetry: true
+model_denoising:
+  name: transformer_unidiffuser_3
+  dim_timestep_embed: 128
+  params:
+    dim_hidden: 312
+    num_layers: 8
+    dim_feedforward: 2048
+    nhead: 8
+model_conditioning:
+  use_class_conditioning: true
+  num_classes: 40
+  use_pointnext_conditioning: true
+  use_contacts: encoder_decimated_clip
+  contact_model: "gb_contacts"
+model:
+  data_sbj_channels: 325
+  data_obj_channels: 9
+  data_contact_channels: 128
+  denoise_mode: sample
+  beta_start: 1.0e-05
+  beta_end: 0.008
+  beta_schedule: linear
+run:
+  datasets:
+  - grab
+  - behave
+dataloader:
+  batch_size: 1024
+  workers: 12
+  sampler: weighted
+train:
+  mixed_precision: 'no'
+  limit_train_batches: null
+  log_step_freq: 20
+  checkpoint_freq: 50000
+  max_steps: 300000
+  print_step_freq: 100
+  limit_val_batches: null
+  losses:
+    denoise_1: 10.0
+    denoise_2: 5.0
+    denoise_3: 5.0
+    smpl_v2v: 30.0
+    obj_v2v: 10.0
+    sbj_contacts: 20.0
+optimizer:
+  type: torch
+  name: AdamW
+  lr: 0.0001
+  weight_decay: 1.0e-06
+  scale_learning_rate_with_batch_size: false
+  gradient_accumulation_steps: 1
+  clip_grad_norm: 5.0
+  kwargs:
+    betas:
+    - 0.95
+    - 0.999
+scheduler:
+  type: transformers
+  name: cosine
+  kwargs:
+    num_warmup_steps: 50000
+    num_training_steps: 300000
