@@ -107,3 +107,9 @@ python -m hoigen.preprocessing.preprocess_behave -c ./config/env.yaml \
 # InterCap
 # TBD
 ```
+
+Finally, copy the files with PointNeXt features from assets (`./assets/pointnext_features/`) 
+to the preprocessed data folder (default: `./data/preprocessed/`):
+```bash
+cp -r ./assets/pointnext_features/ ./data/preprocessed/
+```
