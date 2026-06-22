@@ -14,7 +14,7 @@ Instructions on downloading and setting up the GRAB dataset.
    Required data: Subject 1 - Subject 10 (GRAB parameters), Subject Shape Templates, and GRAB objects.
 2. Extract data using official [extracting code](https://github.com/otaheri/GRAB/#getting-started), 
    the expected folder structure is provided below (`data_smplh` is generated during the next step). 
-3. Convert SMPL-X parameters to SMPL+H (instructions are [here](../popup/utils/smplx2smplh/README.md)).
+3. Convert SMPL-X parameters to SMPL+H (instructions are [here](https://github.com/ptrvilya/tridi/tree/main/tridi/utils/smplx2smplh)).
 
 #### Folders structure
 ```bash
@@ -78,26 +78,26 @@ update the environment configuration in `config/env.yaml`:
 ```
 
 After that run the preprocessing scripts for each dataset. Key step is to generate object keypoints for each dataset 
-that align with trained ones (done whe `-g` is passed to the script):
+that align with trained ones (done whe `<dataset>.generate_obj_keypoints=True` is passed to the script):
 ```bash
 # GRAB
-python -m hoigen.preprocessing.preprocess_grab -g -c ./config/env.yaml \
+python -m tridi.preprocessing.preprocess_grab -c ./config/env.yaml \
   grab.subjects=["s1","s2","s3","s4","s5","s6","s7","s8"] \
-  grab.downsample="10fps" grab.split="train"
-python -m hoigen.preprocessing.preprocess_grab -c ./config/env.yaml \
+  grab.downsample="10fps" grab.split="train" grab.generate_obj_keypoints=True
+python -m tridi.preprocessing.preprocess_grab -c ./config/env.yaml \
   grab.subjects=["s9","s10"] grab.downsample="1fps" grab.split="test"
 
 # BEHAVE 30 fps
-python -m hoigen.preprocessing.preprocess_behave_30fps -g -c ./config/env.yaml \
-  behave.split="train" behave.downsample="10fps"
-python -m hoigen.preprocessing.preprocess_behave_30fps -c ./config/env.yaml \
+python -m tridi.preprocessing.preprocess_behave_30fps -c ./config/env.yaml \
+  behave.split="train" behave.downsample="10fps" behave.generate_obj_keypoints=True
+python -m tridi.preprocessing.preprocess_behave_30fps -c ./config/env.yaml \
   behave.split="test" behave.downsample="1fps"
 
 # BEHAVE 1 fps
-python -m hoigen.preprocessing.preprocess_behave -c ./config/env.yaml \
+python -m tridi.preprocessing.preprocess_behave -c ./config/env.yaml \
   behave.split="train" behave.split_file="./assets/behave_only_1fps.json" \
   behave.combine_1fps_and_30fps=True behave.downsample="10fps"
-python -m hoigen.preprocessing.preprocess_behave -c ./config/env.yaml \
+python -m tridi.preprocessing.preprocess_behave -c ./config/env.yaml \
   behave.split="test" behave.split_file="./assets/behave_only_1fps.json" \
   behave.combine_1fps_and_30fps=True behave.downsample="1fps"
   

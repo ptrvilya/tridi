@@ -331,7 +331,7 @@ if __name__ == "__main__":
         )
 
         generate_obj_keypoints_from_barycentric(
-            config.behave.objects,
+            config.grab.objects,
             Path(config.env.assets_folder) / "object_keypoints" / "grab.pkl",
             Path(config.grab.target),
         )
