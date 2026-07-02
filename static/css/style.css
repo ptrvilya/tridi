@@ -1,0 +1,533 @@
+/* Lightly modified version of https://nvlabs.github.io/stylegan3/ */
+
+
+/* base styles formerly provided by Bulma (only the rules this page uses) */
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+::after,
+::before {
+    box-sizing: inherit;
+}
+
+html {
+    font-size: 14px;
+    background-color: #fff;
+    min-width: 300px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+@media(min-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+    color: #4a4a4a;
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+
+/* page grid */
+
+.n-topnav,
+.n-byline,
+.n-title,
+.n-article {
+    display: grid;
+    justify-items: stretch;
+    grid-template-columns: [screen-start] 8px [page-start kicker-start text-start gutter-start middle-start] 1fr [text-end page-end gutter-end kicker-end middle-end] 8px [screen-end];
+    grid-column-gap: 8px;
+}
+
+@media(min-width: 1000px) {
+    .n-topnav,
+    .n-byline,
+    .n-title,
+    .n-article {
+        grid-template-columns: [screen-start] 1fr [page-start kicker-start] 50px [middle-start] 50px [text-start kicker-end] 800px [text-end gutter-start] 50px [middle-end] 50px [page-end gutter-end] 1fr [screen-end];
+        grid-column-gap: 16px;
+    }
+}
+
+@media (min-width: 1180px) {
+    .n-topnav,
+    .n-byline,
+    .n-title,
+    .n-article {
+        grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 940px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+        grid-column-gap: 32px;
+    }
+}
+
+
+/* top navigation */
+
+.topnav-links {
+    grid-column: text;
+    padding-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+}
+
+
+/* default grid column assignments */
+
+.n-title>* {
+    grid-column: text;
+}
+
+.n-article>* {
+    grid-column: text;
+}
+
+.n-title {
+    padding: 4rem 0 1.5rem;
+}
+
+.l-article {
+    grid-column: text;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+
+/*------------------------------------------------------------------*/
+
+
+/* title */
+
+.n-title h1 {
+    font-family: "Barlow", system-ui, Arial, sans-serif;
+    color: #082333;
+    grid-column: text;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .n-title h1 {
+        font-size: 47px;
+    }
+}
+
+
+/*------------------------------------------------------------------*/
+
+
+/* article */
+
+.n-article {
+    color: rgb(33, 40, 53);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 2rem;
+}
+
+.n-article h2 {
+    contain: layout style;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.25em;
+    margin: 2rem 0 1.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .n-article {
+        line-height: 1.7;
+    }
+    .n-article h2 {
+        font-size: 36px;
+    }
+}
+
+
+/*------------------------------------------------------------------*/
+
+
+/* byline */
+
+.n-byline {
+    contain: style;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 1.0rem;
+    line-height: 1.8em;
+    padding: 1.5rem 0;
+    min-height: 1.8em;
+}
+
+.n-byline .byline {
+    grid-column: text;
+}
+
+.n-byline p {
+    margin: 0;
+}
+
+ul.authors {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+ul.authors li {
+    padding: 0 0.5rem;
+    display: inline-block;
+}
+
+ul.authors sup {
+    color: rgb(126, 126, 126);
+}
+
+ul.authors.affiliations {
+    margin-top: 0.0rem;
+}
+
+ul.authors.affiliations li {
+    color: rgb(126, 126, 126);
+}
+
+.authors-affiliations-gap {
+    width: 100%;
+    height: 0%;
+    margin: 0;
+    border: 0;
+    margin-bottom: .4rem;
+}
+
+
+/*------------------------------------------------------------------*/
+
+
+/* link buttons (extracted from Bulma) */
+
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: none;
+    color: #363636;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.5em;
+    justify-content: center;
+    line-height: 1.5;
+    padding: calc(.5em - 1px) 1em;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.button .icon:first-child:not(:last-child) {
+    margin-left: calc(-.5em - 1px);
+    margin-right: .25em;
+}
+
+.button.is-rounded {
+    border-radius: 290486px;
+    padding-left: 1.25em;
+    padding-right: 1.25em;
+}
+
+.button.is-dark {
+    background-color: #363636;
+    border-color: transparent;
+    color: #fff;
+}
+
+.button.is-dark:hover {
+    background-color: #2f2f2f;
+}
+
+.button.is-dark:focus:not(:active) {
+    box-shadow: 0 0 0 .125em rgba(54, 54, 54, .25);
+}
+
+.button.is-dark:active {
+    background-color: #292929;
+}
+
+.button.is-conference {
+    background-color: #0d6798;
+    border-color: transparent;
+    color: #fff;
+}
+
+.button.is-conference:hover {
+    background-color: #0b5a85;
+    color: #fff;
+}
+
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+
+/* "More Research" dropdown */
+
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-caret {
+    margin-left: .35em;
+    font-size: .8em;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    min-width: 13rem;
+    padding: .5rem 0;
+    background-color: #fff;
+    border-radius: 4px;
+    border-top: 4px solid transparent;
+    background-clip: padding-box;
+    box-shadow: 0 .5em 1em -.125em rgba(10, 10, 10, .2), 0 0 0 1px rgba(10, 10, 10, .05);
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: .375rem 1rem;
+    font-size: .875rem;
+    text-align: left;
+    white-space: nowrap;
+    color: #4a4a4a;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    color: #0a0a0a;
+}
+
+.has-text-centered {
+    text-align: center;
+}
+
+.column {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: .75rem;
+}
+
+
+/* inline SVG icons (replacement for Font Awesome / Academicons) */
+
+.svg-icon {
+    height: 1em;
+    width: 1.125em;
+    fill: currentColor;
+    vertical-align: -.125em;
+}
+
+
+/*------------------------------------------------------------------*/
+
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* For BibTeX */
+
+.bibtex-block {
+    position: relative;
+}
+
+.bibtex-copy {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: .25em .75em;
+    font-size: .8rem;
+    font-family: inherit;
+    color: #4a4a4a;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.bibtex-copy:hover {
+    background-color: #f5f5f5;
+}
+
+.bibtex-copy.copied {
+    color: #fff;
+    background-color: #107a13;
+    border-color: transparent;
+}
+
+pre {
+    font-size: 0.875em;
+    line-height: 1.5;
+    padding: 12px 16px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background-color: #f6f8fa;
+    color: #1f2328;
+    overflow-x: auto;
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* BibTeX syntax highlighting (GitHub-light palette) */
+
+.bib-type {
+    color: #cf222e;
+    font-weight: 600;
+}
+
+.bib-key {
+    color: #953800;
+}
+
+.bib-field {
+    color: #0550ae;
+}
+
+.bib-value {
+    color: #0a3069;
+}
+
+
+/* video */
+
+.video {
+    margin-top: 1.0rem;
+    margin-bottom: .5rem;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.youtube-embed {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.youtube-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+
+/* sponsor logos */
+
+.container_six {
+    display: grid;
+    grid-template-columns: 10% 18% 15% 18% 20% 10%;
+    align-items: center;
+    gap: 20px;
+}
+
+.image {
+    float: left;
+    padding: 5px;
+}
+
+
+/* footer */
+
+footer .content {
+    margin-bottom: 1.5rem;
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.pt-2 {
+    padding-top: 0.5rem !important;
+}
+
+.pb-3 {
+    padding-bottom: 1rem !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-justify {
+    text-align: justify !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
