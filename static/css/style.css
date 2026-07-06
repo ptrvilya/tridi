@@ -55,6 +55,7 @@ img {
 .n-topnav,
 .n-byline,
 .n-title,
+.n-conference,
 .n-article {
     display: grid;
     justify-items: stretch;
@@ -66,6 +67,7 @@ img {
     .n-topnav,
     .n-byline,
     .n-title,
+    .n-conference,
     .n-article {
         grid-template-columns: [screen-start] 1fr [page-start kicker-start] 50px [middle-start] 50px [text-start kicker-end] 800px [text-end gutter-start] 50px [middle-end] 50px [page-end gutter-end] 1fr [screen-end];
         grid-column-gap: 16px;
@@ -76,6 +78,7 @@ img {
     .n-topnav,
     .n-byline,
     .n-title,
+    .n-conference,
     .n-article {
         grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 940px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
         grid-column-gap: 32px;
@@ -103,6 +106,14 @@ img {
 
 .n-article>* {
     grid-column: text;
+    /* prevent wide content (logos, bibtex pre) from inflating the flexible
+       text track on narrow screens */
+    min-width: 0;
+}
+
+.n-conference>* {
+    grid-column: text;
+    min-width: 0;
 }
 
 .n-title {
@@ -241,7 +252,9 @@ ul.authors.affiliations li {
     background-color: #fff;
     border: 1px solid #dbdbdb;
     border-radius: 4px;
-    box-shadow: none;
+    /* Material Design 3 elevated button: level-1 shadow at rest */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 3px 1px rgba(0, 0, 0, .15);
+    transition: box-shadow .2s cubic-bezier(.2, 0, 0, 1);
     color: #363636;
     cursor: pointer;
     display: inline-flex;
@@ -254,6 +267,16 @@ ul.authors.affiliations li {
     text-align: center;
     vertical-align: top;
     white-space: nowrap;
+}
+
+.button:hover {
+    /* level-2 shadow on hover */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 2px 6px 2px rgba(0, 0, 0, .15);
+}
+
+.button:active {
+    /* back to level 1 when pressed */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 1px 3px 1px rgba(0, 0, 0, .15);
 }
 
 .button .icon:first-child:not(:last-child) {
@@ -278,7 +301,7 @@ ul.authors.affiliations li {
 }
 
 .button.is-dark:focus:not(:active) {
-    box-shadow: 0 0 0 .125em rgba(54, 54, 54, .25);
+    box-shadow: 0 0 0 .125em rgba(54, 54, 54, .25), 0 1px 2px rgba(0, 0, 0, .3), 0 1px 3px 1px rgba(0, 0, 0, .15);
 }
 
 .button.is-dark:active {
