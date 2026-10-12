@@ -46,12 +46,7 @@ The steps are described in [docs/data.md](./docs/data.md).
 
 
 ## Pre-trained models and evaluation
-Pre-trained model can be obtained from the [link](https://nc.mlcloud.uni-tuebingen.de/index.php/s/bmsRACRqzCQ4QPq). 
-With the commands:
-```bash
-wget https://nc.mlcloud.uni-tuebingen.de/public.php/dav/files/bmsRACRqzCQ4QPq/gb_main.pth -O ./assets/gb_main.pth
-wget https://nc.mlcloud.uni-tuebingen.de/public.php/dav/files/bmsRACRqzCQ4QPq/gb_contacts.pth -O ./assets/gb_contacts.pth
-```
+Pre-trained model can be obtained from the [link](https://drive.google.com/drive/folders/1DynsvGL3-U9-FEtKozSNS34h14JABxC-?usp=sharing).
 
 The command below is used to run sampling. Prameter `sample.mode` controls the choice of modalities, i.e.:
 three numbers correspond to human, object, and interaction, respectively; 
