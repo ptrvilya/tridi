@@ -21,7 +21,7 @@ from scipy.spatial.transform import Rotation
 
 from .common import (tensor_to_cpu, estimate_transform, DatasetSample, preprocess_worker, \
     get_sequences_list, th_posemap_axisang, generate_object_meshes, contacts_worker, \
-    generate_obj_keypoints_from_barycentric, trimesh_load, init_preprocessing, \
+    generate_obj_keypoints_from_assets, trimesh_load, init_preprocessing, \
     generate_behave_canonicalized_objects, add_sequence_datasets_to_hdf5, add_meatada_to_hdf5)
 from ..utils.parallel_map import parallel_map
 
@@ -418,7 +418,7 @@ if __name__ == "__main__":
             Path(config.behave.target)
         )
 
-        generate_obj_keypoints_from_barycentric(
+        generate_obj_keypoints_from_assets(
             config.behave.objects,
             Path(config.env.assets_folder) / "object_keypoints" / "behave.pkl",
             Path(config.behave.target),

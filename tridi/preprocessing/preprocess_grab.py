@@ -18,7 +18,7 @@ from scipy.spatial.transform import Rotation
 
 from .common import (tensor_to_cpu, estimate_transform, DatasetSample, preprocess_worker, \
     parse_npz, get_sequences_list, generate_object_meshes, prepare_params, \
-    generate_obj_keypoints_from_barycentric, init_preprocessing,
+    generate_obj_keypoints_from_assets, init_preprocessing,
     trimesh_load, add_sequence_datasets_to_hdf5, add_meatada_to_hdf5, params_to_torch)
 from .grab_object_model import ObjectModel
 
@@ -318,8 +318,8 @@ if __name__ == "__main__":
 
     config = init_preprocessing(arguments)
 
-    if not config.grab.use_decimated_obj_meshes:
-        config.grab.objects_path = str(Path(config.grab.root) / "tools/object_meshes/contact_meshes")
+    if config.grab.use_decimated_obj_meshes:
+        config.grab.objects_path = str(Path(config.grab.root) / "tools/object_meshes/decimated_meshes")
 
     preprocess(config)
 
@@ -330,7 +330,7 @@ if __name__ == "__main__":
             Path(config.grab.target)
         )
 
-        generate_obj_keypoints_from_barycentric(
+        generate_obj_keypoints_from_assets(
             config.grab.objects,
             Path(config.env.assets_folder) / "object_keypoints" / "grab.pkl",
             Path(config.grab.target),

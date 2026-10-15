@@ -40,7 +40,7 @@ class PreprocessGrabConfig:
     # paths
     root: str = os.path.join("${env.raw_datasets_folder}", "grab/")
     target: str = os.path.join("${env.datasets_folder}", "grab_smplh/")
-    objects_path: str = os.path.join("${grab.root}", "tools/object_meshes/decimated_meshes")
+    objects_path: str = os.path.join("${grab.root}", "tools/object_meshes/contact_meshes")
 
     # Split (needed to correctly set resulting filename)
     split: str = "train"  # "train", "test"
@@ -49,7 +49,7 @@ class PreprocessGrabConfig:
     # Downsample from 120fps to 30fps or 10fps
     downsample: str = "10fps" # "None", "30fps", "10fps", "1fps"
     # Use modified meshes with fewer vertices
-    use_decimated_obj_meshes: bool = True
+    use_decimated_obj_meshes: bool = False
     # Preprocess only selected subjects
     subjects: List = field(default_factory=lambda: ["*"])
     # Preprocess only selected objects

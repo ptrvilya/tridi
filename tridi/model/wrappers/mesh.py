@@ -36,20 +36,12 @@ class MeshModel:
         self.canonical_obj_keypoints = canonical_obj_keypoints
         class_ids = sorted(self.canonical_obj_keypoints.keys())
         self.canonical_obj_keypoints_th = []
-        self.canonical_obj_normals_th = []
         for class_id in class_ids:
             self.canonical_obj_keypoints_th.append(
                 self.canonical_obj_keypoints[class_id]["cartesian"]
             )
-            self.canonical_obj_normals_th.append(
-                self.canonical_obj_keypoints[class_id]["normals"]
-            )
         self.canonical_obj_keypoints_th = torch.tensor(
             np.stack(self.canonical_obj_keypoints_th, axis=0), dtype=torch.float,
-            requires_grad=False, device=device
-        )
-        self.canonical_obj_normals_th = torch.tensor(
-            np.stack(self.canonical_obj_normals_th, axis=0), dtype=torch.float,
             requires_grad=False, device=device
         )
         canonical_obj_pcs: List[torch.Tensor] = []

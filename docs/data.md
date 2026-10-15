@@ -78,7 +78,10 @@ update the environment configuration in `config/env.yaml`:
 ```
 
 After that run the preprocessing scripts for each dataset. Key step is to generate object keypoints for each dataset 
-that align with trained ones (done whe `<dataset>.generate_obj_keypoints=True` is passed to the script):
+that align with trained ones (done when `<dataset>.generate_obj_keypoints=True` is passed to the script).
+The keypoints are released in `assets/object_keypoints/<dataset>.pkl` as cartesian coordinates in the canonical frame 
+of the official object meshes (GRAB `contact_meshes`, canonicalized BEHAVE objects), so the same per-frame rotation and 
+translation applies to both the keypoints and the full-resolution meshes:
 ```bash
 # GRAB
 python -m tridi.preprocessing.preprocess_grab -c ./config/env.yaml \

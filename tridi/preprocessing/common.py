@@ -398,58 +398,18 @@ def generate_object_meshes(objects, objects_path, output_path):
         _ = object_mesh.export(str(output_folder / f"{obj}.ply"))
 
 
-def generate_obj_keypoints_from_barycentric(
-    objects, keypoints_path, output_path
-):
-    # list of triangles indices - sampled_points_triangles_ids
-    # barycentric coords - sampled_points_bary
+def generate_obj_keypoints_from_assets(objects, keypoints_path, output_path):
+    # keypoints_path is a pkl with {object_name: {"cartesian": (N, 3)}} in the canonical mesh frame
     with open(keypoints_path, "rb") as fp:
-        barycentric_dict = pkl.load(fp)
+        keypoints_dict = pkl.load(fp)
 
     if len(objects) == 0:
-        objects = sorted(list((output_path / "object_meshes").glob("*")))
-        objects = [obj.stem for obj in objects]
+        objects = sorted(keypoints_dict.keys())
 
+    output_folder = output_path / "object_keypoints"
+    output_folder.mkdir(exist_ok=True, parents=True)
     for obj in objects:
-        object_mesh = trimesh.load(
-            str(output_path / "object_meshes" / f"{obj}.ply"), process=False, validate=False
-        )
-
-        # load triangle_ids and barycentric coordinates
-        triangles_ids = barycentric_dict[obj]["triangles_ids"]
-        barycentric = barycentric_dict[obj]["barycentric"]
-        triangles = object_mesh.faces[triangles_ids]
-        triangles_coords = object_mesh.vertices[triangles]
-
-        sampled_points = \
-            trimesh.triangles.barycentric_to_points(triangles_coords, barycentric)
-
-        output_folder = output_path / "object_keypoints"
-        output_folder.mkdir(exist_ok=True, parents=True)
-        np.savez(output_folder / f"{obj}.npz", cartesian=sampled_points, barycentric=barycentric,
-                 triangles_ids=triangles_ids)
-
-
-def generate_obj_keypoints_barycentric(objects, keypoints_path, output_path, dataset):
-    if len(objects) == 0:
-        objects = sorted(list(keypoints_path.glob("*")))
-        objects = [obj.stem for obj in objects]
-
-    # save only barycentric coordinates and triangles ids
-    barycentric_dict = dict()
-    for obj in objects:
-        obj_keypoints = np.load(keypoints_path / f"{obj}.npz")
-        triangles_ids = obj_keypoints["triangles_ids"]
-        barycentric = obj_keypoints["barycentric"]
-
-        barycentric_dict[obj] = {
-            "triangles_ids": triangles_ids,
-            "barycentric": barycentric
-        }
-
-    output_path.parent.mkdir(exist_ok=True, parents=True)
-    with open(output_path, "wb") as fp:
-        pkl.dump(barycentric_dict, fp)
+        np.savez(output_folder / f"{obj}.npz", cartesian=keypoints_dict[obj]["cartesian"])
 
 
 def generate_obj_keypoints(objects, objects_path, n_keypoints, output_path, is_center=False):
